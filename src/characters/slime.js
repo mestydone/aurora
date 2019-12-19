@@ -80,7 +80,7 @@ export default class Slime extends Character{
     damage()
     {
       if (this.hp > 0) {
-        this.hp = this.hp - 23
+        this.hp = this.hp - 41
       } else {
         this.nextLocation = null
         this.body.destroy()

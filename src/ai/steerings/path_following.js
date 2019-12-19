@@ -45,7 +45,7 @@ function standardFollowing (owner, target) {
     return desiredVelocity.subtract(prevVelocity);
 }
 
-function arrive(owner, targetVector) {
+export function arrive(owner, targetVector) {
     const toTarget = targetVector.clone().subtract(new Vector2(owner.x, owner.y));
     const dist = toTarget.length();
     if(dist > 10e-1) {

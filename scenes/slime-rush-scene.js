@@ -21,7 +21,7 @@ class PlayerWithGun extends Phaser.GameObjects.Container {
     this.body.setCollideWorldBounds(true);
     scene.add.existing(this);
 
-    this.character = new Phaser.GameObjects.Sprite(scene, 0, 0, characterSpriteName, 2);
+    this.character = scene.characterFactory.buildCharacter('aurora', 0, 0, {player: true});
     this.gun = new Phaser.GameObjects.Sprite(scene, 2, 8, gunSpriteName);
 
     this.add(this.character)
@@ -215,7 +215,7 @@ let SlimeRushScene = new Phaser.Class({
           down:Phaser.Input.Keyboard.KeyCodes.S,
           left:Phaser.Input.Keyboard.KeyCodes.A,
           right:Phaser.Input.Keyboard.KeyCodes.D
-        }﻿);
+        });
 
         this.playerWithGun.addBehaviour(new UserControlled(150, wasdCursorKeys));
         this.gameObjects.push(this.playerWithGun);

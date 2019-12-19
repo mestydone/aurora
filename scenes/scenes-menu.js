@@ -9,17 +9,18 @@ import GroupAlignmentScene from '../scenes/group-alignment-scene';
 import SteeringSeekScene from '../scenes/steering-seek-scene';
 import SteeringFleeScene from '../scenes/steering-flee-scene';
 import ProceduralScene from '../scenes/procedural-scene';
-import EffectsScene from "./effects-scene";
+import EffectsScene from "../scenes/effects-scene";
 import SteeringInterposeScene from '../scenes/steering-interpose-scene';
 import GroupSeparationScene from '../scenes/group-separation-scene';
 import SteeringPathFollowingScene from '../scenes/steering-path-following-scene';
 import TrapsTilesScene from '../scenes/traps-tiles-scene';
 import EndlessAdventureScene from '../scenes/endless-adventure-scene';
+import SteeringOffsetPursuitScene from '../scenes/steering-offset-pursuit-scene';
 import SlimeRushScene from '../scenes/slime-rush-scene';
 
 const scenes = [
     [ 'StartingScene', StartingScene ],
-    ['EndlessAdventureScene', EndlessAdventureScene],
+    [ 'SlimeRushScene', SlimeRushScene],
     [ 'GroupAlignmentScene', GroupAlignmentScene ],
     [ 'SteeringWanderScene', SteeringWanderScene ],
     [ 'SteeringEvadeScene', SteeringEvadeScene ],
@@ -32,7 +33,9 @@ const scenes = [
     [ 'GroupSeparationScene', GroupSeparationScene],
     [ 'SteeringPathFollowingScene', SteeringPathFollowingScene],
     [ 'TrapsTilesScene', TrapsTilesScene],
+    [ 'SteeringOffsetPursuitScene', SteeringOffsetPursuitScene],
     [ 'SlimeRushScene', SlimeRushScene],
+    [ 'EndlessAdventureScene', EndlessAdventureScene]
 ];
 
 
@@ -41,7 +44,7 @@ const scenes = [
 let MenuScene = new Phaser.Class({
     Extends: Phaser.Scene,
     scenesButtons: [],
-    _runningScene: null, 
+    _runningScene: null,
 
     initialize: function MenuScene() {
         Phaser.Scene.call(this, {key: 'MenuScene'});
@@ -86,7 +89,7 @@ let MenuScene = new Phaser.Class({
             }
         });
 
-        
+
         // Scrolling container
         const mask = this.add.graphics(0, 0).fillRect(32*7, 32*3, 32*10, 32*12);
         this.add.container(32*7, 32*3,this.scenesButtons)
@@ -97,7 +100,7 @@ let MenuScene = new Phaser.Class({
                 || this._scroll <= 0 && dy < 0
                 || this._scroll >= (this.scenesButtons.length - 12) * 32 && dy > 0) return;
 
-                this.scenesButtons.forEach(e => e.y -= Math.floor(dy/5))
+                this.scenesButtons.forEach(e => e.y -= Math.floor(dy/5));
                 this._scroll += Math.floor(dy/5);
         });
     },
@@ -112,9 +115,9 @@ let MenuScene = new Phaser.Class({
                     e.setFill('#AAA')
                 }
             });
-        };
+        }
     },
-    
+
     actionOnClick: function (sceneName) {
         if (this._runningScene == null) {
             this._runningScene = sceneName;
@@ -132,11 +135,11 @@ let MenuScene = new Phaser.Class({
 class Hint extends Phaser.Scene {
     constructor(x = 0, y = 0, text = '', time = 2000) {
         super();
-        this.pos = {x, y}
+        this.pos = {x, y};
         this.text = text;
         this.ttl = time; // in milliseconds
 
-        this._drawingText;
+        //this._drawingText
         this._index = Phaser.Math.RND.integer();
     }
 
