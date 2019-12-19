@@ -1,6 +1,12 @@
 import magicSpellSpritesheet from '../../assets/sprites/vfx/1_magicspell_spritesheet.png'
 import vortexSpritesheet from '../../assets/sprites/vfx/13_vortex_spritesheet.png'
 import flamelashSpritesheet from '../../assets/sprites/vfx/6_flamelash_spritesheet.png'
+import midnightSpritesheet from '../../assets/sprites/vfx/18_midnight_spritesheet.png'
+import nebulaSpritesheet from '../../assets/sprites/vfx/12_nebula_spritesheet.png'
+import castingSpritesheet from '../../assets/sprites/vfx/4_casting_spritesheet.png'
+import magickahitSpritesheet from '../../assets/sprites/vfx/5_magickahit_spritesheet.png'
+
+
 import effectsConfigJson from '../../assets/animations/vfx/effects'
 
 export default class EffectsFactory {
@@ -11,10 +17,13 @@ export default class EffectsFactory {
         scene.load.spritesheet('magicSpell', magicSpellSpritesheet, frameConfig);
         scene.load.spritesheet('vortex', vortexSpritesheet, frameConfig);
         scene.load.spritesheet('flamelash', flamelashSpritesheet, frameConfig);
+        scene.load.spritesheet('midnight', midnightSpritesheet, frameConfig);
+        scene.load.spritesheet('nebula', nebulaSpritesheet, frameConfig);
+        scene.load.spritesheet('magickahit', magickahitSpritesheet, frameConfig);
+
     }
 
     loadAnimations() {
-        const effectSpritesheets = ['magicSpell', 'vortex', 'flamelash'];
         let animationLibrary = new Map();
 
         for (const key of Object.keys(effectsConfigJson)) {

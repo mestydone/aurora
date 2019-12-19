@@ -93,7 +93,8 @@ let MenuScene = new Phaser.Class({
             .setMask(new Phaser.Display.Masks.GeometryMask(this, mask));
 
         this.input.on('wheel', (pointer, currentlyOver, dx, dy, dz, event) => {
-            if (this._scroll <= 0 && dy < 0
+            if (this._runningScene !== null
+                || this._scroll <= 0 && dy < 0
                 || this._scroll >= (this.scenesButtons.length - 12) * 32 && dy > 0) return;
 
                 this.scenesButtons.forEach(e => e.y -= Math.floor(dy/5))
@@ -102,12 +103,6 @@ let MenuScene = new Phaser.Class({
     },
 
     update: function () {
-
-        // checking the pointer on the list of scenes
-
-        //this._runningScene = 'EndlessAdventureScene';
-        //this.scene.run('EndlessAdventureScene');
-
         if (this._runningScene == null) {
             this.scenesButtons.forEach(e => {
                 const [x, y] = [this.input.x, this.input.y]

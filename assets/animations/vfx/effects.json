@@ -14,5 +14,29 @@
     "min_frame": 0,
     "max_frame": 51,
     "framerate": 30
+  },
+  "midnight":
+  {
+    "min_frame": 0,
+    "max_frame": 57,
+    "framerate": 30
+  },
+  "nebula":
+  {
+    "min_frame": 0,
+    "max_frame": 60,
+    "framerate": 30
+  },
+  "casting":
+  {
+    "min_frame": 0,
+    "max_frame": 65,
+    "framerate": 30
+  },
+  "magickahit":
+  {
+    "min_frame": 0,
+    "max_frame": 60,
+    "framerate": 30
   }
 }
