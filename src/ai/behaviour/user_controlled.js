@@ -8,6 +8,7 @@ export default class UserControlled {
 
     update()
     {
+
         const body = this.character.body;
         body.setVelocity(0);
         const speed = this.maxSpeed;
@@ -27,5 +28,7 @@ export default class UserControlled {
         }
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         body.velocity.normalize().scale(speed);
+
+
     }
 }

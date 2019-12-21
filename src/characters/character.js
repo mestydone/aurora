@@ -4,7 +4,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, name, frame);
         scene.physics.world.enable(this);
         scene.add.existing(this);
-
+        
         this.behaviuors = [];
         this.steerings = [];
         this.hp = 100;

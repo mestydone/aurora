@@ -1,63 +1,36 @@
 import Character from "./character";
-import Vector2 from 'phaser/src/math/Vector2'
-const eps = 20;
-export default class Slime extends Character{
-    update() {
-        if (this.hasArrived())
-        {
-            console.log("Slime thinks: 'Where should I go?...'");
-            this.pointOfInterest = new Vector2( Phaser.Math.RND.between(0, this.scene.physics.world.bounds.width - 1),
-                Phaser.Math.RND.between(50, this.scene.physics.world.bounds.height - 50));
-            const neededTileX = Math.floor(this.pointOfInterest.x / 32) ;
-            const neededTileY = Math.floor(this.pointOfInterest.y / 32) ;
-            const currentPositionX =  Math.floor(this.body.x / 32);
-            const currentPositionY =  Math.floor(this.body.y / 32);
-            const me = this;
-            if (!this.wantToJump)
-            {
-                this.scene.finder.findPath(currentPositionX, currentPositionY, neededTileX, neededTileY, function( path ) {
-                    if (path === null) {
-                        console.warn("Slime says: Path was not found, gonna jump!");
-                        me.path = [];
-                        me.wantToJump = true;
-                    } else {
-                        me.path = path;
-                        console.log("Slime says: Path was found, need to go...");
-                        me.selectNextLocation();
-                    }
-                });
-                this.scene.finder.calculate();
-            }
+export default class Slime extends Character {
 
-        }
-        if (this.nextLocation)
-        {
-            const body = this.body;
-            const position = body.position;
+    constructor(scene, x, y, name, frame) {
+        super(scene, x, y, name, frame);
+        this.isAlive = true;
+        this._time = 0;
+        this._lastAttack = 0;
+        this.setDepth(2);
+    }
 
-            if (position.distance(this.nextLocation) < eps) {
-                this.selectNextLocation();
-            }
-            else {
+    addBehaviour(behaviour) {
+        behaviour.character = this;
+        this.behaviuors.push(behaviour);
+    }
 
-                let delta = Math.round(this.nextLocation.x - position.x);
-                if (delta !== 0) {
-                    body.setVelocity(delta, 0);
-                } else {
-                    delta = Math.round(this.nextLocation.y - position.y);
-
-                    body.setVelocity(0, delta);
-                }
-                this.body.velocity.normalize().scale(Math.min(Math.abs(delta), this.speed));
-            }
+    update(time, delta) {
+        const [vx, vy] = [this.body.velocity.x, this.body.velocity.y];
+        
+        if (this.isAlive) {
+            this._time = time;
+            this.behaviuors.forEach(x => x.update());
+        } else {
+            this.setVelocity(vx*0.1, vy*0.1)
         }
 
         this.updateAnimation();
     }
+
     updateAnimation() {
         const animsController = this.anims;
         try {
-          if (this.hp >= 0) {
+          if (this.hp > 0) {
             if (this.wantToJump)
             {
                 animsController.play(this.animations[1], true);
@@ -68,33 +41,25 @@ export default class Slime extends Character{
           } else {
             animsController.play(this.animations[2], true);
           }
-        } catch (e) {
-
-        }
-    }
-    hasArrived()
-    {
-        return this.pointOfInterest === undefined || this.pointOfInterest.distance(this.body.position) < eps;
+        } catch (e) { }
     }
 
-    damage()
+    hit(damage)
     {
-      if (this.hp > 0) {
-        this.hp = this.hp - 41
-      } else {
-        this.nextLocation = null
-        this.body.destroy()
+      if ((this.hp -= damage) <= 0) {
+          this.isAlive = false;
+          this.scene.physics.world.disable(this);
+          this.setDepth(1);
       }
     }
 
-    selectNextLocation() {
-        const nextTile = this.path.shift();
-        if (nextTile)
-        {
-            this.nextLocation = new Vector2(nextTile.x * 32, nextTile.y * 32);
-        } else
-        {
-            this.nextLocation = this.body.position;
-        }
+    attack() {
+        this._lastAttack = this._time;
+        return Phaser.Math.RND.between(15, 40);
     }
+
+    get readyToAttack() {
+        return this.isAlive && this._time - this._lastAttack > 1000;
+    }
+    
 }

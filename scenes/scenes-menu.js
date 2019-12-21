@@ -34,7 +34,6 @@ const scenes = [
     [ 'SteeringPathFollowingScene', SteeringPathFollowingScene],
     [ 'TrapsTilesScene', TrapsTilesScene],
     [ 'SteeringOffsetPursuitScene', SteeringOffsetPursuitScene],
-    [ 'SlimeRushScene', SlimeRushScene],
     [ 'EndlessAdventureScene', EndlessAdventureScene]
 ];
 
