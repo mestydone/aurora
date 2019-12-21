@@ -74,7 +74,7 @@ export default class CharacterFactory {
 
         let character = new Human(this.scene, x, y, spriteSheetName, 2);
         character.animationSets = this.animationLibrary.get(spriteSheetName);
-        character.addBehaviour(new UserControlled(300, this.scene.input.keyboard.createCursorKeys()));
+        character.addBehaviour(new UserControlled(100, this.scene.input.keyboard.createCursorKeys()));
 
         //todo: not here
         character.footstepsMusic = this.scene.sound.add('footsteps', {
@@ -87,7 +87,7 @@ export default class CharacterFactory {
           delay: 0
       });
       //todo uncomment at your won risk - these footsteps will get you insane
-     // character.footstepsMusic.play();
+      //character.footstepsMusic.play();
         return character;
 
     }

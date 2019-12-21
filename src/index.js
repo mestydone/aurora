@@ -6,8 +6,8 @@ import MyLevelScene from '../scenes/my-level-scene';
 
 const config = {
   type: Phaser.AUTO,
-  width: 1366,
-  height: 768,
+  width: document.body.scrollWidth,
+  height: document.body.scrollHeight,
   pixelArt: true,
   zoom: 1,
 
